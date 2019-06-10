@@ -10,11 +10,10 @@ import (
 func main() {
 
 	reader := bufio.NewReader(os.Stdin)
-	unacceptedInput := true
 	journalExists := false
 	trialBalanceExists := false
 
-	for unacceptedInput {
+	for true {
 		fmt.Println("Enter a command")
 		fmt.Println("j - start entering journal entries")
 		fmt.Println("p - post journal entries")
@@ -22,16 +21,17 @@ func main() {
 		fmt.Println("w - create a worksheet")
 		fmt.Println("ae - create adjusting entries")
 		fmt.Println("bs - create a balance sheet")
-		fmt.Println("fs - create a financial statement")
+		fmt.Println("is - create an income statement")
 		fmt.Println("c - close books")
-		input, _ := fmt.ReadString('\n')
+		input, _ := reader.ReadString('\n')
 		input = strings.Replace(input, "\n", "", -1)
 		fmt.Println(input)
+		// Entering Journalling Entries
 		if input == "j" {
 			// go to journaling interface
 			journalExists = true
-			unacceptedInput = false
 
+			// Posting to Ledger
 		} else if input == "p" {
 			if journalExists {
 				// post
@@ -39,15 +39,15 @@ func main() {
 				fmt.Println("No journal entries exist. Posting could be not happen.")
 			}
 			// post journal
-			unacceptedInput = false
+			// Create Trial Balance
 		} else if input == "tb" {
 			if journalExists {
 				// create a trial balance
 			} else {
 				fmt.Println("No journal entries exist. Trial balance could not be created.")
 			}
-			unacceptedInput = false
 			trialBalanceExists = true
+			// Create Worksheet
 		} else if input == "w" {
 			if journalExists {
 				// create a worksheet
@@ -55,7 +55,7 @@ func main() {
 				fmt.Println("No journal entries exist. Trial balance could not be created.")
 			}
 			// create a worksheet
-			unacceptedInput = false
+			// Entering Adjusting Entries
 		} else if input == "ae" {
 			if journalExists {
 				// go into journal interface
@@ -64,24 +64,23 @@ func main() {
 			}
 			// make adjustments
 			// create adjusted trial balance
-			unacceptedInput = false
 			trialBalanceExists = true
+			// Create Balance Sheet
 		} else if input == "bs" {
 			if trialBalanceExists {
 				// create a balance sheet
 			} else {
 				fmt.Println("No trial balance exists. Balance sheet could not be created.")
 			}
-
-			unacceptedInput = false
-		} else if input == "fs" {
+			// Create Income Statement
+		} else if input == "is" {
 			if trialBalanceExists {
 
 			} else {
-				fmt.Println("No trial balance exists. Financial statement could not be created.")
+				fmt.Println("No trial balance exists. Income statement could not be created.")
 			}
-			// create a financial statement
-			unacceptedInput = false
+			// create a income statement
+			// Close Books
 		} else if input == "c" {
 			if trialBalanceExists {
 				//
@@ -89,9 +88,10 @@ func main() {
 				fmt.Println("No trial balance exists. Financial statement could not be created.")
 			}
 			// closes accounts
-			unacceptedInput = false
 			journalExists = false
 			trialBalanceExists = false
+		} else {
+			fmt.Println("Unaccepted input, please try again :)")
 		}
 	}
 }
