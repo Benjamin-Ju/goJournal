@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -38,17 +39,39 @@ func (j journal) enterEntries() {
 			fmt.Println("Enter account:")
 			account, _ := reader.ReadString('\n')
 			account = strings.Replace(account, "\n", "", -1)
+			debitAccounts = append(debitAccounts, account)
 			fmt.Println("Enter value:")
 			value, _ := reader.ReadString('\n')
 			value = strings.Replace(value, "\n", "", -1)
-			// valueInt = int(value)
+			valueInt, _ := strconv.Atoi(value)
+			debitValues = append(debitValues, valueInt)
 			// if a space exists as a prefix, it is now considered a credit entry
 			if strings.HasPrefix(account, " ") {
-
+				stillDebit = false
+				account, _ := reader.ReadString('\n')
+				account = strings.Replace(account, "\n", "", -1)
+				creditAccounts = append(creditAccounts, account)
+				fmt.Println("Enter value:")
+				value, _ := reader.ReadString('\n')
+				value = strings.Replace(value, "\n", "", -1)
+				valueInt, _ := strconv.Atoi(value)
+				creditValues = append(creditValues, valueInt)
 			}
 		}
 		for stillCredit {
-
+			fmt.Println("Enter account: (enter q to quit)")
+			account, _ := reader.ReadString('\n')
+			account = strings.Replace(account, "\n", "", -1)
+			if account == "q" {
+				stillCredit = false
+				break
+			}
+			creditAccounts = append(creditAccounts, account)
+			fmt.Println("Enter value:")
+			value, _ := reader.ReadString('\n')
+			value = strings.Replace(value, "\n", "", -1)
+			valueInt, _ := strconv.Atoi(value)
+			creditValues = append(creditValues, valueInt)
 		}
 	}
 
