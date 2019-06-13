@@ -23,6 +23,7 @@ func main() {
 		fmt.Println("bs - create a balance sheet")
 		fmt.Println("is - create an income statement")
 		fmt.Println("c - close books")
+		fmt.Println("q - quit program")
 		input, _ := reader.ReadString('\n')
 		input = strings.Replace(input, "\n", "", -1)
 		fmt.Println(input)
@@ -30,7 +31,7 @@ func main() {
 		if input == "j" {
 			// go to journaling interface
 			journalExists = true
-
+			enterEntries()
 			// Posting to Ledger
 		} else if input == "p" {
 			if journalExists {
@@ -90,6 +91,8 @@ func main() {
 			// closes accounts
 			journalExists = false
 			trialBalanceExists = false
+		} else if input == "q" {
+			os.Exit(0)
 		} else {
 			fmt.Println("Unaccepted input, please try again :)")
 		}

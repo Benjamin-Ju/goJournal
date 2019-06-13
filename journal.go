@@ -18,7 +18,7 @@ type journalEntry struct {
 
 type journal []journalEntry
 
-func (j journal) enterEntries() {
+func enterEntries() {
 	reader := bufio.NewReader(os.Stdin)
 	stay := true
 	for stay {
@@ -39,23 +39,18 @@ func (j journal) enterEntries() {
 			fmt.Println("Enter account:")
 			account, _ := reader.ReadString('\n')
 			account = strings.Replace(account, "\n", "", -1)
-			debitAccounts = append(debitAccounts, account)
 			fmt.Println("Enter value:")
 			value, _ := reader.ReadString('\n')
 			value = strings.Replace(value, "\n", "", -1)
 			valueInt, _ := strconv.Atoi(value)
-			debitValues = append(debitValues, valueInt)
 			// if a space exists as a prefix, it is now considered a credit entry
 			if strings.HasPrefix(account, " ") {
 				stillDebit = false
-				account, _ := reader.ReadString('\n')
-				account = strings.Replace(account, "\n", "", -1)
 				creditAccounts = append(creditAccounts, account)
-				fmt.Println("Enter value:")
-				value, _ := reader.ReadString('\n')
-				value = strings.Replace(value, "\n", "", -1)
-				valueInt, _ := strconv.Atoi(value)
 				creditValues = append(creditValues, valueInt)
+			} else {
+				debitAccounts = append(debitAccounts, account)
+				debitValues = append(debitValues, valueInt)
 			}
 		}
 		for stillCredit {
@@ -73,6 +68,15 @@ func (j journal) enterEntries() {
 			valueInt, _ := strconv.Atoi(value)
 			creditValues = append(creditValues, valueInt)
 		}
+		temp := journalEntry{
+			date:           date,
+			debitEntries:   debitAccounts,
+			debitBalances:  debitValues,
+			creditEntries:  creditAccounts,
+			creditBalances: creditValues,
+		}
+		// j = append(j, temp)
+		fmt.Println(temp)
 	}
 
 }
