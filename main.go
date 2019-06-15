@@ -18,7 +18,6 @@ func main() {
 		fmt.Println("j - start entering journal entries")
 		fmt.Println("p - post journal entries")
 		fmt.Println("tb - create a trial balance")
-		fmt.Println("w - create a worksheet")
 		fmt.Println("ae - create adjusting entries")
 		fmt.Println("bs - create a balance sheet")
 		fmt.Println("is - create an income statement")
@@ -48,14 +47,6 @@ func main() {
 				fmt.Println("No journal entries exist. Trial balance could not be created.")
 			}
 			trialBalanceExists = true
-			// Create Worksheet
-		} else if input == "w" {
-			if journalExists {
-				// create a worksheet
-			} else {
-				fmt.Println("No journal entries exist. Trial balance could not be created.")
-			}
-			// create a worksheet
 			// Entering Adjusting Entries
 		} else if input == "ae" {
 			if journalExists {
