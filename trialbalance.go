@@ -1,22 +1,27 @@
 package main
 
-func (j journal) createTrialBalance() {
-	trialBalance := make(map[string]int)
+import "fmt"
+
+type trialBalance map[string]int
+
+func (t *trialBalance) createTrialBalance(j journal) {
+	tempTrialBalance := trialBalance{}
 	for _, entry := range j {
 		for index, debit := range entry.debitEntries {
-			if _, ok := trialBalance[debit]; ok {
-				trialBalance[debit] += entry.debitBalances[index]
+			if _, ok := tempTrialBalance[debit]; ok {
+				tempTrialBalance[debit] += entry.debitBalances[index]
 			} else {
-				trialBalance[debit] = entry.debitBalances[index]
+				tempTrialBalance[debit] = entry.debitBalances[index]
 			}
 		}
 		for index, credit := range entry.creditEntries {
-			if _, ok := trialBalance[credit]; ok {
-				trialBalance[credit] -= entry.creditBalances[index]
+			if _, ok := tempTrialBalance[credit]; ok {
+				tempTrialBalance[credit] -= entry.creditBalances[index]
 			} else {
-				trialBalance[credit] = -entry.creditBalances[index]
+				tempTrialBalance[credit] = -entry.creditBalances[index]
 			}
 		}
 
 	}
+	fmt.Println(tempTrialBalance)
 }

@@ -12,16 +12,18 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 	journalExists := false
 	trialBalanceExists := false
+	myJournal := journal{}
+	journalPointer := &myJournal
+	myTrialBalance := trialBalance{}
+	tbPointer := &myTrialBalance
 
 	for true {
 		fmt.Println("Enter a command")
 		fmt.Println("j - start entering journal entries")
-		fmt.Println("p - post journal entries")
 		fmt.Println("tb - create a trial balance")
 		fmt.Println("ae - create adjusting entries")
 		fmt.Println("bs - create a balance sheet")
 		fmt.Println("is - create an income statement")
-		fmt.Println("c - close books")
 		fmt.Println("q - quit program")
 		input, _ := reader.ReadString('\n')
 		input = strings.Replace(input, "\n", "", -1)
@@ -30,19 +32,11 @@ func main() {
 		if input == "j" {
 			// go to journaling interface
 			journalExists = true
-			enterEntries()
+			journalPointer.enterEntries()
 			// Posting to Ledger
-		} else if input == "p" {
-			if journalExists {
-				// post
-			} else {
-				fmt.Println("No journal entries exist. Posting could be not happen.")
-			}
-			// post journal
-			// Create Trial Balance
 		} else if input == "tb" {
 			if journalExists {
-				// create a trial balance
+				tbPointer.createTrialBalance(myJournal)
 			} else {
 				fmt.Println("No journal entries exist. Trial balance could not be created.")
 			}
@@ -73,15 +67,6 @@ func main() {
 			}
 			// create a income statement
 			// Close Books
-		} else if input == "c" {
-			if trialBalanceExists {
-				//
-			} else {
-				fmt.Println("No trial balance exists. Financial statement could not be created.")
-			}
-			// closes accounts
-			journalExists = false
-			trialBalanceExists = false
 		} else if input == "q" {
 			os.Exit(0)
 		} else {

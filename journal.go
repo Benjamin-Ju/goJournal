@@ -18,14 +18,16 @@ type journalEntry struct {
 
 type journal []journalEntry
 
-func enterEntries() {
+func (j *journal) enterEntries() {
 	reader := bufio.NewReader(os.Stdin)
-	stay := true
-	for stay {
+	for true {
 		// date gets entered
-		fmt.Println("Day of entry:")
+		fmt.Println("Day of entry: (enter d to be done)")
 		date, _ := reader.ReadString('\n')
 		date = strings.Replace(date, "\n", "", -1)
+		if date == "d" {
+			break
+		}
 		// declarations required for accounts
 		var debitAccounts []string
 		var creditAccounts []string
@@ -46,6 +48,7 @@ func enterEntries() {
 			// if a space exists as a prefix, it is now considered a credit entry
 			if strings.HasPrefix(account, " ") {
 				stillDebit = false
+				account = strings.Replace(account, " ", "", -1)
 				creditAccounts = append(creditAccounts, account)
 				creditValues = append(creditValues, valueInt)
 			} else {
@@ -75,8 +78,7 @@ func enterEntries() {
 			creditEntries:  creditAccounts,
 			creditBalances: creditValues,
 		}
-		// j = append(j, temp)
-		fmt.Println(temp)
+		(*j) = append((*j), temp)
 	}
 
 }
