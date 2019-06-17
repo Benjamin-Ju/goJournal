@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 type trialBalance map[string]int
 
 func (t *trialBalance) createTrialBalance(j journal) {
@@ -23,5 +21,5 @@ func (t *trialBalance) createTrialBalance(j journal) {
 		}
 
 	}
-	fmt.Println(tempTrialBalance)
+	(*t) = tempTrialBalance
 }

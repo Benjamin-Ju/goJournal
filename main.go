@@ -22,8 +22,7 @@ func main() {
 		fmt.Println("j - start entering journal entries")
 		fmt.Println("tb - create a trial balance")
 		fmt.Println("ae - create adjusting entries")
-		fmt.Println("bs - create a balance sheet")
-		fmt.Println("is - create an income statement")
+		fmt.Println("fs - create financial statements (balance sheet and income statement)")
 		fmt.Println("q - quit program")
 		input, _ := reader.ReadString('\n')
 		input = strings.Replace(input, "\n", "", -1)
@@ -44,29 +43,20 @@ func main() {
 			// Entering Adjusting Entries
 		} else if input == "ae" {
 			if journalExists {
-				// go into journal interface
+				journalPointer.enterEntries()
+				// make adjustments
+				// create adjusted trial balance
+				tbPointer.createTrialBalance(myJournal)
 			} else {
 				fmt.Println("No journal entries exist. Trial balance could not be created.")
 			}
-			// make adjustments
-			// create adjusted trial balance
-			trialBalanceExists = true
 			// Create Balance Sheet
-		} else if input == "bs" {
+		} else if input == "fs" {
 			if trialBalanceExists {
 				// create a balance sheet
 			} else {
 				fmt.Println("No trial balance exists. Balance sheet could not be created.")
 			}
-			// Create Income Statement
-		} else if input == "is" {
-			if trialBalanceExists {
-
-			} else {
-				fmt.Println("No trial balance exists. Income statement could not be created.")
-			}
-			// create a income statement
-			// Close Books
 		} else if input == "q" {
 			os.Exit(0)
 		} else {
