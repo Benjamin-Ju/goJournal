@@ -35,6 +35,8 @@ func (j *journal) enterEntries() {
 		var creditValues []int
 		stillDebit := true
 		stillCredit := true
+		debitTotalValue := 0
+		creditTotalValue := 0
 		// entering debit entries
 		fmt.Println("Enter your debit entries, ")
 		for stillDebit {
@@ -51,9 +53,11 @@ func (j *journal) enterEntries() {
 				account = strings.Replace(account, " ", "", -1)
 				creditAccounts = append(creditAccounts, account)
 				creditValues = append(creditValues, valueInt)
+				creditTotalValue += valueInt
 			} else {
 				debitAccounts = append(debitAccounts, account)
 				debitValues = append(debitValues, valueInt)
+				debitTotalValue += valueInt
 			}
 		}
 		for stillCredit {
@@ -70,6 +74,11 @@ func (j *journal) enterEntries() {
 			value = strings.Replace(value, "\n", "", -1)
 			valueInt, _ := strconv.Atoi(value)
 			creditValues = append(creditValues, valueInt)
+			creditTotalValue += valueInt
+		}
+		if creditTotalValue != debitTotalValue {
+			fmt.Println("You broke the first rule of accounting. DEBIT MUST EQUAL CREDIT")
+			continue
 		}
 		temp := journalEntry{
 			date:           date,
