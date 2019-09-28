@@ -1,4 +1,4 @@
-package main
+ package main
 
 import (
 	"bufio"
@@ -51,11 +51,11 @@ func (j *journal) enterEntries() {
 			if strings.HasPrefix(account, " ") {
 				stillDebit = false
 				account = strings.Replace(account, " ", "", -1)
-				creditAccounts = append(creditAccounts, account)
+				creditAccounts = append(creditAccounts, strings.ToLower(account))
 				creditValues = append(creditValues, valueInt)
 				creditTotalValue += valueInt
 			} else {
-				debitAccounts = append(debitAccounts, account)
+				debitAccounts = append(debitAccounts, strings.ToLower(account))
 				debitValues = append(debitValues, valueInt)
 				debitTotalValue += valueInt
 			}
@@ -68,7 +68,7 @@ func (j *journal) enterEntries() {
 				stillCredit = false
 				break
 			}
-			creditAccounts = append(creditAccounts, account)
+			creditAccounts = append(creditAccounts, strings.ToLower(account))
 			fmt.Println("Enter value:")
 			value, _ := reader.ReadString('\n')
 			value = strings.Replace(value, "\n", "", -1)

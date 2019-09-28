@@ -36,6 +36,7 @@ func main() {
 		} else if input == "tb" {
 			if journalExists {
 				tbPointer.createTrialBalance(myJournal)
+				tbPointer.writeTrialBalance()
 			} else {
 				fmt.Println("No journal entries exist. Trial balance could not be created.")
 			}
@@ -47,6 +48,7 @@ func main() {
 				// make adjustments
 				// create adjusted trial balance
 				tbPointer.createTrialBalance(myJournal)
+				tbPointer.writeTrialBalance()
 			} else {
 				fmt.Println("No journal entries exist. Trial balance could not be created.")
 			}

@@ -1,5 +1,11 @@
 package main
 
+import (
+	"fmt"
+	"sort"
+	"strconv"
+)
+
 type trialBalance map[string]int
 
 func (t *trialBalance) createTrialBalance(j journal) {
@@ -30,4 +36,30 @@ func (t *trialBalance) createTrialBalance(j journal) {
 
 	}
 	(*t) = tempTrialBalance
+}
+
+func (t *trialBalance) writeTrialBalance() {
+	// The Sort
+	n := map[int][]string{}
+	var a [] int
+	for k, v := range *t {
+		n[v] = append(n[v], k)
+	}
+	for k := range n {
+		a = append(a, k)
+	}
+	sort.Sort(sort.Reverse(sort.IntSlice(a)))
+	// The Printing
+	spaceString := "                                 "
+	for _, k := range a {
+		for _, s := range n[k] {
+			newLine := ""
+			if k < 0 {
+				newLine = s + spaceString[len(s)-1:] + "    " + strconv.Itoa(k*-1)
+			} else {
+				newLine = s + spaceString[len(s)-1:] + strconv.Itoa(k)
+			}
+			fmt.Println(newLine)
+		}
+	}
 }
